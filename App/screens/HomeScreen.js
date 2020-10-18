@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
+
 import Card from '../components/Card'
+import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
 const styles = StyleSheet.create({
   container: {
@@ -8,17 +10,12 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#fff',
   },
-  activityIndicatorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 })
 
 // Generates a random id
 const randomIdGenerator = () => Math.random().toString(36).substring(7)
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true)
   const [entries, setEntries] = useState([])
 
@@ -42,14 +39,10 @@ export default function HomeScreen() {
     loadEntries()
   }, [])
 
-  const renderItem = ({ item }) => <Card title={item} />
+  const renderItem = ({ item }) => <Card title={item} navigation={navigation} />
 
   if (isLoading) {
-    return (
-      <View style={styles.activityIndicatorContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    )
+    return <CustomActivityIndicator />
   }
   return (
     // Display entries instead of ActivityIndicator

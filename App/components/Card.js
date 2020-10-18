@@ -34,9 +34,16 @@ const styles = StyleSheet.create({
 // Convert a name into title case
 const makeTitleCase = (name) => name.charAt(0).toUpperCase() + name.slice(1)
 
-export default function Card({ title }) {
+export default function Card({ title, navigation }) {
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() =>
+        navigation.push('detailScreen', {
+          title,
+        })
+      }
+    >
       <Text style={styles.cardTitle}>{makeTitleCase(title)}</Text>
       {/* <Text style={styles.cardText}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti,
