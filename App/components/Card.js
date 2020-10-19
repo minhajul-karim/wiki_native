@@ -1,6 +1,8 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 
+import { makeTitleCase } from '../utils/Helpers'
+
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
@@ -30,9 +32,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 })
-
-// Convert a name into title case
-const makeTitleCase = (name) => name.charAt(0).toUpperCase() + name.slice(1)
 
 export default function Card({ title, navigation }) {
   return (
