@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, StyleSheet, View, Button } from 'react-native'
 
 import Card from '../components/Card'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
@@ -47,6 +47,7 @@ export default function HomeScreen({ navigation }) {
   return (
     // Display entries instead of ActivityIndicator
     <View style={styles.container}>
+      <Button title="Go" onPress={() => navigation.navigate('testScreen')} />
       <FlatList
         data={entries}
         renderItem={renderItem}
