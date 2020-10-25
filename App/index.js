@@ -2,46 +2,39 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { createDrawerNavigator } from '@react-navigation/drawer'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Provider as PaperProvider } from 'react-native-paper'
 
 import HomeScreen from './screens/HomeScreen'
 import DetailScreen from './screens/DetailScreen'
-import DrawerContent from './screens/DrawerContent'
 import { makeTitleCase } from './utils/Helpers'
 
-const HomeStack = createStackNavigator()
-const Drawer = createDrawerNavigator()
+const Stack = createStackNavigator()
+const Tab = createBottomTabNavigator()
 
-function TestScreen() {
+function CreateEntryScreen() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Test Screen</Text>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Create Entry</Text>
     </View>
   )
 }
 
-const HomeStackNavigator = () => {
+function RandomScreen() {
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen
-        name="homeScreen"
-        component={HomeScreen}
-        options={{ title: 'Entries' }}
-      />
-      <HomeStack.Screen
-        name="detailScreen"
-        component={DetailScreen}
-        options={({ route }) => ({
-          title: makeTitleCase(route.params.title),
-        })}
-      />
-      <HomeStack.Screen
-        name="testScreen"
-        component={TestScreen}
-        options={{ title: 'Test' }}
-      />
-    </HomeStack.Navigator>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Random</Text>
+    </View>
+  )
+}
+
+const HomeTabs = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Random" component={RandomScreen} />
+      <Tab.Screen name="Create" component={CreateEntryScreen} />
+    </Tab.Navigator>
   )
 }
 
@@ -49,15 +42,16 @@ export default function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
-        <Drawer.Navigator
-          drawerContent={(props) => <DrawerContent {...props} />}
-        >
-          <Drawer.Screen
-            name="homeScreen"
-            component={HomeStackNavigator}
-            options={{ title: 'Home' }}
+        <Stack.Navigator>
+          <Stack.Screen name="HomeStack" component={HomeTabs} />
+          <Stack.Screen
+            name="detailScreen"
+            component={DetailScreen}
+            options={({ route }) => ({
+              title: makeTitleCase(route.params.title),
+            })}
           />
-        </Drawer.Navigator>
+        </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
   )

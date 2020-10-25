@@ -47,7 +47,6 @@ export default function HomeScreen({ navigation }) {
   return (
     // Display entries instead of ActivityIndicator
     <View style={styles.container}>
-      <Button title="Go" onPress={() => navigation.navigate('testScreen')} />
       <FlatList
         data={entries}
         renderItem={renderItem}
