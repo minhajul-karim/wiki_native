@@ -1,12 +1,13 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import React from 'react'
+import { Text, View } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
 
-import HomeScreen from './screens/HomeScreen'
 import DetailScreen from './screens/DetailScreen'
+import HomeScreen from './screens/HomeScreen'
+import RandomScreen from './screens/RandomScreen'
 import { makeTitleCase } from './utils/Helpers'
 
 const Stack = createStackNavigator()
@@ -16,14 +17,6 @@ function CreateEntryScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Create Entry</Text>
-    </View>
-  )
-}
-
-function RandomScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Random</Text>
     </View>
   )
 }
@@ -43,7 +36,7 @@ export default function App() {
     <PaperProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="HomeStack" component={HomeTabs} />
+          <Stack.Screen name="HomeTabs" component={HomeTabs} />
           <Stack.Screen
             name="detailScreen"
             component={DetailScreen}
