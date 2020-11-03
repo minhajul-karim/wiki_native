@@ -25,66 +25,35 @@ const styles = StyleSheet.create({
   },
 })
 
-const generateRandomIndex = (numOfEntries) => {
-  return Math.floor(Math.random() * numOfEntries)
-}
-
 export default function DetailScreen({ route }) {
   const [isLoading, setIsLoading] = useState(true)
-  const [entries, setEntries] = useState([])
   const [content, setContent] = useState('')
-  const [randInd, setRandInd] = useState(0)
-
-  // Fetch entries from API
-  //   async function loadEntries() {
-  //     try {
-  //       const response = await fetch(
-  //         'https://wiki-rest-api.herokuapp.com/api/entries'
-  //       )
-  //       const allEntries = await response.json()
-  //       if (response.ok) {
-  //         setEntries(allEntries.entries)
-  //       }
-  //     } catch (error) {
-  //       console.warn(error.message)
-  //     }
-  //   }
-
-  // Fetch content
-  async function loadContent(title) {
-    try {
-      const response = await fetch(
-        `https://wiki-rest-api.herokuapp.com/api/entries/${title}`
-      )
-      const entry = await response.json()
-      if (response.ok) {
-        setContent(entry.content)
-        setIsLoading(false)
-      }
-    } catch (error) {
-      console.warn(error.message)
-    }
-  }
 
   // Load content of the card user tapped in home screen
   useEffect(() => {
+    let isSubscribed = true
+    // Fetch content
+    async function loadContent(title) {
+      try {
+        const response = await fetch(
+          `https://wiki-rest-api.herokuapp.com/api/entries/${title}`
+        )
+        const entry = await response.json()
+        if (response.ok) {
+          if (isSubscribed) {
+            setContent(entry.content)
+            setIsLoading(false)
+          }
+        }
+      } catch (error) {
+        console.warn(error.message)
+      }
+    }
     loadContent(route.params.title)
-  })
-
-  // Set random index
-  //   useEffect(() => {
-  //     if (entries.length > 0) {
-  //       const randomNum = generateRandomIndex(entries.length)
-  //       setRandInd(randomNum)
-  //     }
-  //   }, [])
-
-  // Load a random entry
-  //   useEffect(() => {
-  //     if (entries.length > 0) {
-  //       loadContent(entries[randInd])
-  //     }
-  //   }, [entries, randInd])
+    return () => {
+      isSubscribed = false
+    }
+  }, [])
 
   // Display activity indicator when the content is not ready yet
   if (isLoading && !content) {
