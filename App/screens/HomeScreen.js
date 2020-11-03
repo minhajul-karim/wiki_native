@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { FlatList, StyleSheet, View, Button } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { FlatList, StyleSheet, View } from 'react-native'
 
 import Card from '../components/Card'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
+import { EntriesContext } from '../utils/EntriesContext'
 
 const styles = StyleSheet.create({
   container: {
@@ -17,27 +18,21 @@ const randomIdGenerator = () => Math.random().toString(36).substring(7)
 
 export default function HomeScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true)
-  const [entries, setEntries] = useState([])
+  const { loadEntries } = useContext(EntriesContext)
 
-  // Fetch entries from API
-  async function loadEntries() {
-    try {
-      const response = await fetch(
-        'https://wiki-rest-api.herokuapp.com/api/entries'
-      )
-      const allEntries = await response.json()
-      if (response.ok) {
-        setEntries(allEntries.entries)
-        setIsLoading(false)
-      }
-    } catch (error) {
-      console.warn(error.message)
-    }
+  let entries = null
+  const loadData = async () => {
+    const data = await loadEntries()
+    entries = data
   }
+  loadData()
 
-  useEffect(() => {
-    loadEntries()
-  }, [])
+  console.log(entries)
+
+  //   useEffect(() => {
+  //     const entries = loadEntries()
+  //     console.log(entries)
+  //   }, [])
 
   const renderItem = ({ item }) => <Card title={item} navigation={navigation} />
 

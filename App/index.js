@@ -8,6 +8,7 @@ import { Provider as PaperProvider } from 'react-native-paper'
 import DetailScreen from './screens/DetailScreen'
 import HomeScreen from './screens/HomeScreen'
 import RandomScreen from './screens/RandomScreen'
+import { EntriesProvider } from './utils/EntriesContext'
 import { makeTitleCase } from './utils/Helpers'
 
 const Stack = createStackNavigator()
@@ -33,19 +34,21 @@ const HomeTabs = () => {
 
 export default function App() {
   return (
-    <PaperProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="HomeTabs" component={HomeTabs} />
-          <Stack.Screen
-            name="detailScreen"
-            component={DetailScreen}
-            options={({ route }) => ({
-              title: makeTitleCase(route.params.title),
-            })}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <EntriesProvider>
+      <PaperProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="HomeTabs" component={HomeTabs} />
+            <Stack.Screen
+              name="detailScreen"
+              component={DetailScreen}
+              options={({ route }) => ({
+                title: makeTitleCase(route.params.title),
+              })}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </EntriesProvider>
   )
 }

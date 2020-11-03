@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, View } from 'react-native'
 
 import { generateRandomIndex } from '../utils/Helpers'
+import { EntriesContext } from '../utils/EntriesContext'
 import Card from '../components/Card'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
@@ -10,6 +11,8 @@ export default function RandomScreen({ navigation }) {
   const [entries, setEntries] = useState([])
   const [randomPost, setRandomPost] = useState('')
 
+  const bar = useContext(EntriesContext)
+  console.log(bar)
   // Fetch entries from API
   async function loadEntries() {
     try {

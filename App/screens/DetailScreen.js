@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
+import { EntriesContext } from '../utils/EntriesContext'
 
 const styles = StyleSheet.create({
   body: {
