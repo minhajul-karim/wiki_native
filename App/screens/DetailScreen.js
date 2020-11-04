@@ -33,7 +33,7 @@ export default function DetailScreen({ route }) {
   useEffect(() => {
     let isSubscribed = true
     // Fetch content
-    async function loadContent(title) {
+    async function fetchContent(title) {
       try {
         const response = await fetch(
           `https://wiki-rest-api.herokuapp.com/api/entries/${title}`
@@ -49,7 +49,7 @@ export default function DetailScreen({ route }) {
         console.warn(error.message)
       }
     }
-    loadContent(route.params.title)
+    fetchContent(route.params.title)
     return () => {
       isSubscribed = false
     }

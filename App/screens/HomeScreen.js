@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, StyleSheet, View, RefreshControl } from 'react-native'
 
 import Card from '../components/Card'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
@@ -19,29 +19,38 @@ export default function HomeScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true)
   const [entries, setEntries] = useState([])
 
-  useEffect(() => {
-    let isSubsribed = true
-    // Fetch entries from API
-    async function loadEntries() {
-      try {
-        const response = await fetch(
-          'https://wiki-rest-api.herokuapp.com/api/entries'
-        )
-        const allEntries = await response.json()
-        if (response.ok) {
-          // Set state to mounted components only
-          if (isSubsribed) {
-            setEntries(allEntries.entries)
-            setIsLoading(false)
-          }
-        }
-      } catch (error) {
-        console.warn(error.message)
+  // Fetch entries from API
+  const fetchEntries = async () => {
+    try {
+      const response = await fetch(
+        'https://wiki-rest-api.herokuapp.com/api/entries'
+      )
+      const allEntries = await response.json()
+      if (response.ok) {
+        return allEntries.entries
       }
+    } catch (error) {
+      console.error(error)
     }
-    loadEntries()
+    return []
+  }
+
+  // Refresh entries
+  const onRefresh = () => {
+    setEntries([])
+    fetchEntries().then((currentEntries) => setEntries(currentEntries))
+  }
+
+  useEffect(() => {
+    let isSubscribed = true
+    if (isSubscribed) {
+      fetchEntries().then((currentEntries) => {
+        setEntries(currentEntries)
+        setIsLoading(false)
+      })
+    }
     return () => {
-      isSubsribed = false
+      isSubscribed = false
     }
   }, [])
 
@@ -57,6 +66,9 @@ export default function HomeScreen({ navigation }) {
         data={entries}
         renderItem={renderItem}
         keyExtractor={() => randomIdGenerator()}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
+        }
       />
     </View>
   )
