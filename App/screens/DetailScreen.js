@@ -40,6 +40,7 @@ export default function DetailScreen({ route }) {
         )
         const entry = await response.json()
         if (response.ok) {
+          // Update state only if component is mounted
           if (isSubscribed) {
             setContent(entry.content)
             setIsLoading(false)

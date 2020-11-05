@@ -26,7 +26,6 @@ export default function RandomScreen({ navigation }) {
   }
 
   useEffect(() => {
-    console.log(entries.length)
     if (entries.length === 0) {
       loadEntries()
     }

@@ -55,7 +55,7 @@ const getHeaderTitle = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home'
   switch (routeName) {
     case 'Home':
-      return 'All Entries'
+      return 'Wiki'
     case 'Random':
       return 'Random Page'
     default:
