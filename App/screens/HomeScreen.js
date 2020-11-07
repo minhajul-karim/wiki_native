@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FlatList, StyleSheet, View, RefreshControl, Text } from 'react-native'
 import { Searchbar } from 'react-native-paper'
 
+import { fetchEntries } from '../utils/Helpers'
 import Card from '../components/Card'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
@@ -29,22 +30,6 @@ export default function HomeScreen({ navigation }) {
   const [entries, setEntries] = useState([])
   const [filteredEntries, setFilteredEntries] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
-
-  // Fetch entries from API
-  const fetchEntries = async () => {
-    try {
-      const response = await fetch(
-        'https://wiki-rest-api.herokuapp.com/api/entries'
-      )
-      const allEntries = await response.json()
-      if (response.ok) {
-        return allEntries.entries
-      }
-    } catch (error) {
-      console.error(error)
-    }
-    return []
-  }
 
   // Refresh entries
   const onRefresh = () => {
@@ -100,6 +85,9 @@ export default function HomeScreen({ navigation }) {
           data={filteredEntries}
           renderItem={renderItem}
           keyExtractor={() => randomIdGenerator()}
+          ListEmptyComponent={
+            <Text style={styles.errorMessage}>No result</Text>
+          }
           refreshControl={
             <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
           }
@@ -139,6 +127,9 @@ export default function HomeScreen({ navigation }) {
         data={entries}
         renderItem={renderItem}
         keyExtractor={() => randomIdGenerator()}
+        ListEmptyComponent={
+          <Text style={styles.errorMessage}>No wikis? Create one.</Text>
+        }
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
         }
