@@ -57,8 +57,11 @@ export default function HomeScreen({ navigation }) {
   const onChangeSearch = (query) => {
     setSearchQuery(query)
     if (query.length > 0) {
-      const matchedEntries = entries.filter((entryName) => {
-        if (entryName.indexOf(query.toLowerCase()) !== -1) return entryName
+      const matchedEntries = []
+      entries.forEach((entryName) => {
+        if (entryName.indexOf(query.toLowerCase()) !== -1) {
+          matchedEntries.push(entryName)
+        }
       })
       setFilteredEntries(matchedEntries)
     } else {
@@ -113,7 +116,14 @@ export default function HomeScreen({ navigation }) {
           placeholder="Search"
           style={styles.searchBar}
         />
-        <Text style={styles.errorMessage}>No result</Text>
+        <FlatList
+          data={filteredEntries}
+          renderItem={renderItem}
+          keyExtractor={() => randomIdGenerator()}
+          ListEmptyComponent={
+            <Text style={styles.errorMessage}>No result</Text>
+          }
+        />
       </View>
     )
   }

@@ -28,6 +28,9 @@ function CreateEntryScreen() {
 const HomeTabs = () => {
   return (
     <Tab.Navigator
+      tabBarOptions={{
+        keyboardHidesTabBar: true,
+      }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName
