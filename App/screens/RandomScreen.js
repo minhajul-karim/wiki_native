@@ -1,31 +1,70 @@
-import React, { useEffect, useState } from 'react'
-import { Animated, Button, View, TouchableOpacity, Text } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
+import React, { useEffect, useRef, useState } from 'react'
+import {
+  Animated,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native'
 
-import { generateRandomIndex, fetchEntries } from '../utils/Helpers'
 import Card from '../components/Card'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
+import { fetchEntries, generateRandomIndex } from '../utils/Helpers'
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 30,
+  },
+  diceButton: {
+    backgroundColor: '#2B29C6',
+    width: 70,
+    height: 70,
+    borderRadius: 70 / 2,
+    borderWidth: 1,
+    borderColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50,
+  },
+})
 
 export default function RandomScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true)
   const [entries, setEntries] = useState([])
   const [randomPost, setRandomPost] = useState('')
-  const rotation = new Animated.Value(0)
-  const rotationData = rotation.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
-  })
+  const [isRotated, setIsRotated] = useState(false)
+  const rotationValue = useRef(new Animated.Value(0)).current
 
-  const onPressHandler = () => {
-    const randomIndex = generateRandomIndex(entries.length)
-    setRandomPost(entries[randomIndex])
-    // Handle rotation
-    rotation.setValue(0)
-    Animated.timing(rotation, {
-      toValue: 1,
-      duration: 500,
+  const rotationStyle = {
+    transform: [
+      {
+        rotate: rotationValue.interpolate({
+          inputRange: [0, 1],
+          outputRange: ['0deg', '180deg'],
+        }),
+      },
+    ],
+  }
+
+  const startRotation = () => {
+    const toValue = isRotated ? 0 : 1
+    setIsRotated(!isRotated)
+    Animated.timing(rotationValue, {
+      toValue,
+      duration: 150,
       useNativeDriver: true,
     }).start()
+  }
+
+  const onPressHandler = () => {
+    setTimeout(() => {
+      const randomIndex = generateRandomIndex(entries.length)
+      setRandomPost(entries[randomIndex])
+    }, 150)
+    startRotation()
   }
 
   useEffect(() => {
@@ -42,32 +81,13 @@ export default function RandomScreen({ navigation }) {
     return <CustomActivityIndicator />
   }
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 30,
-      }}
-    >
+    <View style={styles.container}>
       <Card title={randomPost} navigation={navigation} />
-      <TouchableOpacity
-        style={{
-          backgroundColor: '#2B29C6',
-          width: 60,
-          height: 60,
-          borderRadius: 60 / 2,
-          borderWidth: 1,
-          borderColor: '#fff',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 50,
-          transform: [{ rotate: rotationData }],
-        }}
-        onPress={onPressHandler}
-      >
-        <FontAwesome5 name="dice-six" size={30} color="white" />
-      </TouchableOpacity>
+      <TouchableWithoutFeedback onPress={onPressHandler}>
+        <Animated.View style={[styles.diceButton, rotationStyle]}>
+          <FontAwesome5 name="dice-five" size={40} color="white" />
+        </Animated.View>
+      </TouchableWithoutFeedback>
     </View>
   )
 }
