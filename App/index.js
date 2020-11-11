@@ -1,13 +1,12 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import {
-  NavigationContainer,
   getFocusedRouteNameFromRoute,
+  NavigationContainer,
 } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { Text, View } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
-import { Ionicons } from '@expo/vector-icons'
 
 import DetailScreen from './screens/DetailScreen'
 import HomeScreen from './screens/HomeScreen'
@@ -15,7 +14,7 @@ import RandomScreen from './screens/RandomScreen'
 import { makeTitleCase } from './utils/Helpers'
 
 const Stack = createStackNavigator()
-const Tab = createBottomTabNavigator()
+const Tab = createMaterialBottomTabNavigator()
 
 function CreateEntryScreen() {
   return (
@@ -28,26 +27,26 @@ function CreateEntryScreen() {
 const HomeTabs = () => {
   return (
     <Tab.Navigator
+      shifting
       tabBarOptions={{
         keyboardHidesTabBar: true,
       }}
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
-          let iconName
-          if (route.name === 'Home') {
-            iconName = 'ios-home'
-          } else if (route.name === 'Random') {
-            iconName = 'md-shuffle'
-          } else if (route.name === 'Create') {
-            iconName = 'md-create'
-          }
-          return <Ionicons name={iconName} size={size} color={color} />
-        },
-      })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Random" component={RandomScreen} />
-      <Tab.Screen name="Create" component={CreateEntryScreen} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ tabBarIcon: 'home-account' }}
+      />
+      <Tab.Screen
+        name="Random"
+        component={RandomScreen}
+        options={{ tabBarIcon: 'dice-5' }}
+      />
+      <Tab.Screen
+        name="Create"
+        component={CreateEntryScreen}
+        options={{ tabBarIcon: 'file-plus' }}
+      />
     </Tab.Navigator>
   )
 }
