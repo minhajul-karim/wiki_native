@@ -84,6 +84,7 @@ export default function HomeScreen({ navigation }) {
         data={entries}
         renderItem={renderItem}
         keyExtractor={randomIdGenerator}
+        showsVerticalScrollIndicator={false}
         ListHeaderComponent={(
           <View style={{padding: 1}}>
             <Searchbar
