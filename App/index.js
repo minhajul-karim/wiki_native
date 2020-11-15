@@ -1,17 +1,17 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import {
   getFocusedRouteNameFromRoute,
-  NavigationContainer,
+  NavigationContainer
 } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { Text, View } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
-
 import DetailScreen from './screens/DetailScreen'
 import HomeScreen from './screens/HomeScreen'
 import RandomScreen from './screens/RandomScreen'
 import { makeTitleCase } from './utils/Helpers'
+
 
 const Stack = createStackNavigator()
 const Tab = createMaterialBottomTabNavigator()
@@ -31,11 +31,13 @@ const HomeTabs = () => {
       tabBarOptions={{
         keyboardHidesTabBar: true,
       }}
+      barStyle={{backgroundColor: '#fff'}}
+      activeColor="#2A78C7"
     >
       <Tab.Screen
         name="Home"
         component={HomeScreen}
-        options={{ tabBarIcon: 'home-account' }}
+        options={{ tabBarIcon: 'home' }}
       />
       <Tab.Screen
         name="Random"
@@ -69,7 +71,12 @@ export default function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: '#fff' },
+            headerTintColor: '#000',
+          }}
+        >
           <Stack.Screen
             name="HomeTabs"
             component={HomeTabs}

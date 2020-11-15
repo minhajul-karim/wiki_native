@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
-
 import { makeTitleCase } from '../utils/Helpers'
+
 
 const styles = StyleSheet.create({
   card: {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   cardTitle: {
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: '600',
     color: '#121212',
   },
