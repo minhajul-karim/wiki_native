@@ -5,24 +5,15 @@ import {
 } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
-import { Text, View } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
+import CreateScreen from './screens/CreateScreen'
 import DetailScreen from './screens/DetailScreen'
 import HomeScreen from './screens/HomeScreen'
 import RandomScreen from './screens/RandomScreen'
 import { makeTitleCase } from './utils/Helpers'
 
-
 const Stack = createStackNavigator()
 const Tab = createMaterialBottomTabNavigator()
-
-function CreateEntryScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Create Entry</Text>
-    </View>
-  )
-}
 
 const HomeTabs = () => {
   return (
@@ -46,7 +37,7 @@ const HomeTabs = () => {
       />
       <Tab.Screen
         name="Create"
-        component={CreateEntryScreen}
+        component={CreateScreen}
         options={{ tabBarIcon: 'file-plus' }}
       />
     </Tab.Navigator>
