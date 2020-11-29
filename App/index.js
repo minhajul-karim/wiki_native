@@ -1,14 +1,15 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import {
   getFocusedRouteNameFromRoute,
-  NavigationContainer
+  NavigationContainer,
 } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { Provider as PaperProvider } from 'react-native-paper'
-import CreateScreen from './screens/CreateScreen'
+import NewPostScreenHeader from './components/NewPostScreenHeader'
 import DetailScreen from './screens/DetailScreen'
 import HomeScreen from './screens/HomeScreen'
+import NewPostScreen from './screens/NewPostScreen'
 import RandomScreen from './screens/RandomScreen'
 import { makeTitleCase } from './utils/Helpers'
 
@@ -22,7 +23,7 @@ const HomeTabs = () => {
       tabBarOptions={{
         keyboardHidesTabBar: true,
       }}
-      barStyle={{backgroundColor: '#fff'}}
+      barStyle={{ backgroundColor: '#fff' }}
       activeColor="#2A78C7"
     >
       <Tab.Screen
@@ -36,8 +37,8 @@ const HomeTabs = () => {
         options={{ tabBarIcon: 'dice-5' }}
       />
       <Tab.Screen
-        name="Create"
-        component={CreateScreen}
+        name="New"
+        component={NewPostScreen}
         options={{ tabBarIcon: 'file-plus' }}
       />
     </Tab.Navigator>
@@ -52,9 +53,9 @@ const getHeaderTitle = (route) => {
     case 'Home':
       return 'Wiki'
     case 'Random':
-      return 'Random Page'
+      return 'Random Post'
     default:
-      return 'Create Page'
+      return (props) => <NewPostScreenHeader {...props} />
   }
 }
 
