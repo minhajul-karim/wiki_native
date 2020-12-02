@@ -4,7 +4,6 @@ import React from 'react'
 import {
   Keyboard,
   StyleSheet,
-  Text,
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
@@ -32,9 +31,9 @@ export default function NewPostScreenHeader() {
       <TouchableWithoutFeedback onPress={cancelHandler}>
         <Feather name="x" size={24} color="black" />
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => console.log('Pressed publish')}>
+      {/* <TouchableWithoutFeedback onPress={() => console.log('Pressed publish')}>
         <Text style={styles.publish}>Publish</Text>
-      </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback> */}
     </View>
   )
 }

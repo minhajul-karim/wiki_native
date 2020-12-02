@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   ScrollView,
   StyleSheet,
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
 
 export default function NewPostScreen({ navigation }) {
   const window = useWindowDimensions()
+  const [content, setContent] = useState('')
 
   return (
     <ScrollView
@@ -29,6 +30,8 @@ export default function NewPostScreen({ navigation }) {
         multiline
         autoFocus
         placeholder="Write something..."
+        onChangeText={(text) => setContent(text)}
+        value={content}
       />
     </ScrollView>
   )

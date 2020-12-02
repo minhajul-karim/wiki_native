@@ -6,7 +6,6 @@ import {
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { Provider as PaperProvider } from 'react-native-paper'
-import NewPostScreenHeader from './components/NewPostScreenHeader'
 import DetailScreen from './screens/DetailScreen'
 import HomeScreen from './screens/HomeScreen'
 import NewPostScreen from './screens/NewPostScreen'
@@ -55,7 +54,7 @@ const getHeaderTitle = (route) => {
     case 'Random':
       return 'Random Post'
     default:
-      return (props) => <NewPostScreenHeader {...props} />
+      return 'New Post'
   }
 }
 
