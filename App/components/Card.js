@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { makeTitleCase } from '../utils/Helpers'
 
-
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
@@ -26,11 +25,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#121212',
   },
-  cardText: {
-    fontSize: 15,
-    color: '#EDEDED',
-    marginTop: 10,
-  },
 })
 
 export default function Card({ title, navigation }) {
@@ -38,17 +32,12 @@ export default function Card({ title, navigation }) {
     <TouchableOpacity
       style={styles.card}
       onPress={() =>
-        navigation.push('detailScreen', {
+        navigation.push('Details', {
           title,
         })
       }
     >
       <Text style={styles.cardTitle}>{makeTitleCase(title)}</Text>
-      {/* <Text style={styles.cardText}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti,
-          ad.ipsum dolor sit amet consectetur adipisicing elit. Exercitationem,
-          nihil...
-        </Text> */}
     </TouchableOpacity>
   )
 }
