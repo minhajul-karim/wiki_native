@@ -4,9 +4,9 @@ import {
   Animated,
   StyleSheet,
   TouchableWithoutFeedback,
+  useWindowDimensions,
   View,
 } from 'react-native'
-
 import Card from '../components/Card'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
 import { fetchEntries, generateRandomIndex } from '../utils/Helpers'
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
+    marginBottom: 80,
   },
 })
 
@@ -37,6 +37,7 @@ export default function RandomScreen({ navigation }) {
   const [randomPost, setRandomPost] = useState('')
   const [isRotated, setIsRotated] = useState(false)
   const rotationValue = useRef(new Animated.Value(0)).current
+  const window = useWindowDimensions()
 
   const rotationStyle = {
     transform: [
@@ -81,8 +82,17 @@ export default function RandomScreen({ navigation }) {
     return <CustomActivityIndicator />
   }
   return (
-    <View style={styles.container}>
-      <Card title={randomPost} navigation={navigation} />
+    <View
+      style={[
+        styles.container,
+        {
+          minHeight: Math.round(window.height),
+        },
+      ]}
+    >
+      <View style={{ marginBottom: 50, width: '90%' }}>
+        <Card title={randomPost} navigation={navigation} />
+      </View>
       <TouchableWithoutFeedback onPress={onPressHandler}>
         <Animated.View style={[styles.diceButton, rotationStyle]}>
           <FontAwesome5 name="dice-five" size={40} color="white" />

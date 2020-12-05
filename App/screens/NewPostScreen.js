@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons'
 import React, { useLayoutEffect, useState } from 'react'
 import {
+  Keyboard,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -11,7 +12,7 @@ import { Appbar } from 'react-native-paper'
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 15,
   },
   input: {
     textAlignVertical: 'top',
@@ -32,13 +33,23 @@ export default function NewPostScreen({ navigation }) {
     )
   }
 
-  const customHeader = () => {
+  const customHeader = ({ navigation }) => {
     return (
-      <Appbar.Header style={{ justifyContent: 'space-between' }}>
-        <Appbar.Action icon="mail" onPress={() => console.log('cancelled')} />
+      <Appbar.Header style={{ backgroundColor: '#fff' }}>
         <Appbar.Content
           title="Publish"
-          onPress={() => console.log('published')}
+          titleStyle={{ color: 'green', fontSize: 17 }}
+          color="#000"
+          onPress={() => console.log(content)}
+        />
+        <Appbar.Action
+          icon="close"
+          color="#000"
+          onPress={() => {
+            setContent('')
+            navigation.goBack()
+            Keyboard.dismiss()
+          }}
         />
       </Appbar.Header>
     )
@@ -46,8 +57,6 @@ export default function NewPostScreen({ navigation }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      // headerLeft: headerLeftComponent,
-      // headerRight: () => <Text>Publish</Text>,
       header: customHeader,
     })
   })

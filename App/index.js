@@ -34,7 +34,7 @@ const RandomStackScreen = () => {
 
 const NewPostStack = createStackNavigator()
 
-const NewPostStackScreen = () => {
+const NewPostStackScreen = ({ navigation }) => {
   return (
     <NewPostStack.Navigator>
       <NewPostStack.Screen
@@ -97,10 +97,26 @@ export default function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeStackScreen} />
-          <Tab.Screen name="Random" component={RandomStackScreen} />
-          <Tab.Screen name="NewPost" component={NewPostStackScreen} />
+        <Tab.Navigator
+          shifting
+          barStyle={{ backgroundColor: '#fff' }}
+          activeColor="#2B29C6"
+        >
+          <Tab.Screen
+            name="Home"
+            component={HomeStackScreen}
+            options={{ tabBarIcon: 'home' }}
+          />
+          <Tab.Screen
+            name="Random"
+            component={RandomStackScreen}
+            options={{ tabBarIcon: 'dice-5' }}
+          />
+          <Tab.Screen
+            name="NewPost"
+            component={NewPostStackScreen}
+            options={{ tabBarIcon: 'file-plus' }}
+          />
         </Tab.Navigator>
         {/* <Stack.Navigator
           screenOptions={{
