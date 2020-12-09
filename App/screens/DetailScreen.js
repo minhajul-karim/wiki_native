@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import Markdown from 'react-native-markdown-display'
-
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
+import { makeTitleCase } from '../utils/Helpers'
 
 const styles = StyleSheet.create({
   body: {
@@ -25,12 +25,19 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function DetailScreen({ route }) {
+export default function DetailScreen({ route, navigation }) {
   const [isLoading, setIsLoading] = useState(true)
   const [content, setContent] = useState('')
+  const postTitle = route.params.title
+  console.log(postTitle)
 
   // Load content of the card user tapped in home screen
   useEffect(() => {
+    // Update screen header
+    navigation.setOptions({
+      headerTitle: makeTitleCase(postTitle),
+    })
+
     let isSubscribed = true
     // Fetch content
     async function fetchContent(title) {
@@ -47,10 +54,10 @@ export default function DetailScreen({ route }) {
           }
         }
       } catch (error) {
-        console.warn(error.message)
+        console.warn('err', error.message)
       }
     }
-    fetchContent(route.params.title)
+    fetchContent(postTitle)
     return () => {
       isSubscribed = false
     }

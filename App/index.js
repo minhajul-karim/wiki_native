@@ -13,7 +13,13 @@ const HomeStack = createStackNavigator()
 const HomeStackScreen = () => {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          title: 'Wiki',
+        }}
+      />
       <HomeStack.Screen name="Details" component={DetailScreen} />
     </HomeStack.Navigator>
   )
@@ -24,7 +30,13 @@ const RandomStack = createStackNavigator()
 const RandomStackScreen = () => {
   return (
     <RandomStack.Navigator>
-      <RandomStack.Screen name="Random" component={RandomScreen} />
+      <RandomStack.Screen
+        name="Random"
+        component={RandomScreen}
+        options={{
+          title: 'Random Post',
+        }}
+      />
       <RandomStack.Screen name="Details" component={DetailScreen} />
     </RandomStack.Navigator>
   )
@@ -35,13 +47,7 @@ const NewPostStack = createStackNavigator()
 const NewPostStackScreen = ({ navigation }) => {
   return (
     <NewPostStack.Navigator>
-      <NewPostStack.Screen
-        name="NewPost"
-        component={NewPostScreen}
-        options={{
-          title: '',
-        }}
-      />
+      <NewPostStack.Screen name="NewPost" component={NewPostScreen} />
       <NewPostStack.Screen name="Details" component={DetailScreen} />
     </NewPostStack.Navigator>
   )
@@ -61,17 +67,17 @@ export default function App() {
           <Tab.Screen
             name="Home"
             component={HomeStackScreen}
-            options={{ tabBarIcon: 'home' }}
+            options={{ tabBarIcon: 'home', title: 'Home' }}
           />
           <Tab.Screen
             name="Random"
             component={RandomStackScreen}
-            options={{ tabBarIcon: 'dice-5' }}
+            options={{ tabBarIcon: 'dice-5', title: 'Random' }}
           />
           <Tab.Screen
             name="NewPost"
             component={NewPostStackScreen}
-            options={{ tabBarIcon: 'file-plus' }}
+            options={{ tabBarIcon: 'file-plus', title: 'New' }}
           />
         </Tab.Navigator>
       </NavigationContainer>
