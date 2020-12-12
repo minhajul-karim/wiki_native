@@ -42,7 +42,7 @@ export default function NewPostScreen({ navigation }) {
     setIsPublishButtonInDialogDisabled,
   ] = useState(true)
   const [publishButtonColor, setPublishButtonColor] = useState('grey')
-  const [isLoading, setIsLoading] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
   const [displayFileError, setDisplayFileError] = useState(false)
 
   const customHeader = ({ navigation }) => {
@@ -71,6 +71,7 @@ export default function NewPostScreen({ navigation }) {
   }
 
   const publishHandler = () => {
+    setIsSaving(true)
     fetch('https://wiki-rest-api.herokuapp.com/api/entries/', {
       method: 'POST',
       headers: {
@@ -85,10 +86,10 @@ export default function NewPostScreen({ navigation }) {
       .then((data) => {
         if (data.page_exists) {
           setDisplayFileError(true)
-          console.log('Page already exists')
+          setIsSaving(false)
         } else {
-          // Go to new page
-          console.log('saved')
+          // Go to new post
+          setIsSaving(false)
           setIsModalVisible(false)
           navigation.push('Details', {
             title: fileName.toLowerCase(),
@@ -156,7 +157,7 @@ export default function NewPostScreen({ navigation }) {
           </Dialog.Content>
           <Dialog.Actions>
             <ActivityIndicator
-              animating={false}
+              animating={isSaving}
               color="#2B29C6"
               style={{ marginRight: 10 }}
             />
@@ -173,13 +174,12 @@ export default function NewPostScreen({ navigation }) {
           </Dialog.Actions>
         </Dialog>
       </Portal>
-
       <TextInput
         style={styles.input}
         multiline
         numberOfLines={5}
         autoFocus
-        placeholder="Write markdowm here..."
+        placeholder="Write markdown..."
         onChangeText={(text) => setContent(text)}
         value={content}
       />
