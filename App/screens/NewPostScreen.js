@@ -1,11 +1,10 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import {
   Keyboard,
-  ScrollView,
+  KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
-  useWindowDimensions,
 } from 'react-native'
 import {
   ActivityIndicator,
@@ -25,7 +24,6 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     fontSize: 18,
     fontFamily: 'serif',
-    backgroundColor: 'lightblue',
   },
   modal: {
     backgroundColor: '#fff',
@@ -36,7 +34,6 @@ const styles = StyleSheet.create({
 })
 
 export default function NewPostScreen({ navigation }) {
-  const window = useWindowDimensions()
   const [content, setContent] = useState('')
   const [fileName, setFileName] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -126,7 +123,7 @@ export default function NewPostScreen({ navigation }) {
   })
 
   return (
-    <ScrollView style={[styles.container]}>
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <Portal>
         <Dialog
           visible={isModalVisible}
@@ -176,15 +173,16 @@ export default function NewPostScreen({ navigation }) {
           </Dialog.Actions>
         </Dialog>
       </Portal>
+
       <TextInput
-        style={[styles.input]}
+        style={styles.input}
         multiline
-        numberOfLines={100}
+        numberOfLines={5}
         autoFocus
         placeholder="Write markdowm here..."
         onChangeText={(text) => setContent(text)}
         value={content}
       />
-    </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
