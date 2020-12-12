@@ -43,13 +43,7 @@ const NewPostStack = createStackNavigator()
 const NewPostStackScreen = ({ navigation }) => {
   return (
     <NewPostStack.Navigator>
-      <NewPostStack.Screen
-        name="NewPost"
-        component={NewPostScreen}
-        options={{
-          title: '',
-        }}
-      />
+      <NewPostStack.Screen name="NewPost" component={NewPostScreen} />
       <NewPostStack.Screen name="Details" component={DetailScreen} />
     </NewPostStack.Navigator>
   )
@@ -69,17 +63,17 @@ export default function App() {
           <Tab.Screen
             name="Home"
             component={HomeStackScreen}
-            options={{ tabBarIcon: 'home' }}
+            options={{ tabBarIcon: 'home', title: 'Home' }}
           />
           <Tab.Screen
             name="Random"
             component={RandomStackScreen}
-            options={{ tabBarIcon: 'dice-5' }}
+            options={{ tabBarIcon: 'dice-5', title: 'Random' }}
           />
           <Tab.Screen
             name="New"
             component={NewPostStackScreen}
-            options={{ tabBarIcon: 'file-plus' }}
+            options={{ tabBarIcon: 'file-plus', title: 'New' }}
           />
         </Tab.Navigator>
       </NavigationContainer>
