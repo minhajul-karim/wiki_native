@@ -29,7 +29,6 @@ export default function DetailScreen({ route, navigation }) {
   const [isLoading, setIsLoading] = useState(true)
   const [content, setContent] = useState('')
   const postTitle = route.params.title
-  console.log(postTitle)
 
   // Load content of the card user tapped in home screen
   useEffect(() => {

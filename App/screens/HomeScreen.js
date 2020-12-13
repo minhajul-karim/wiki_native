@@ -36,6 +36,7 @@ export default function HomeScreen({ navigation }) {
     setEntries([])
     fetchEntries().then((currentEntries) => {
       setEntries(currentEntries)
+      setStoredEntries(currentEntries)
       setIsLoading(false)
     })
   }
@@ -44,7 +45,7 @@ export default function HomeScreen({ navigation }) {
 
   const onChangeSearch = (query) => {
     const matchedEntries = []
-    entries.forEach((entryName) => {
+    storedEntries.forEach((entryName) => {
       const formattedQuery = query.toLowerCase()
       if (entryName.indexOf(formattedQuery) !== -1) {
         matchedEntries.push(entryName)
@@ -77,7 +78,7 @@ export default function HomeScreen({ navigation }) {
   if (isLoading) {
     return <CustomActivityIndicator />
   }
-  
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -85,16 +86,16 @@ export default function HomeScreen({ navigation }) {
         renderItem={renderItem}
         keyExtractor={randomIdGenerator}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={(
-          <View style={{padding: 1}}>
+        ListHeaderComponent={
+          <View style={{ padding: 1 }}>
             <Searchbar
               value={searchQuery}
-              onChangeText={text => onChangeSearch(text)}
+              onChangeText={(text) => onChangeSearch(text)}
               placeholder="Search"
               style={styles.searchBar}
             />
           </View>
-        )}
+        }
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
         }
