@@ -4,8 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { Provider as PaperProvider } from 'react-native-paper'
 import DetailScreen from './screens/DetailScreen'
+import EditorScreen from './screens/EditorScreen'
 import HomeScreen from './screens/HomeScreen'
-import NewPostScreen from './screens/NewPostScreen'
 import RandomScreen from './screens/RandomScreen'
 
 const HomeStack = createStackNavigator()
@@ -19,6 +19,7 @@ const HomeStackScreen = () => {
         options={{ title: 'Wiki' }}
       />
       <HomeStack.Screen name="Details" component={DetailScreen} />
+      <HomeStack.Screen name="Editor" component={EditorScreen} />
     </HomeStack.Navigator>
   )
 }
@@ -43,7 +44,7 @@ const NewPostStack = createStackNavigator()
 const NewPostStackScreen = ({ navigation }) => {
   return (
     <NewPostStack.Navigator>
-      <NewPostStack.Screen name="NewPost" component={NewPostScreen} />
+      <NewPostStack.Screen name="NewPost" component={EditorScreen} />
       <NewPostStack.Screen name="Details" component={DetailScreen} />
     </NewPostStack.Navigator>
   )

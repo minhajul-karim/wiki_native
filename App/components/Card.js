@@ -32,7 +32,7 @@ export default function Card({ title, navigation }) {
     <TouchableOpacity
       style={styles.card}
       onPress={() =>
-        navigation.push('Details', {
+        navigation.navigate('Details', {
           title,
         })
       }

@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function NewPostScreen({ navigation }) {
+export default function NewPostScreen({ route, navigation }) {
   const [content, setContent] = useState('')
   const [fileName, setFileName] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -44,6 +44,7 @@ export default function NewPostScreen({ navigation }) {
   const [publishButtonColor, setPublishButtonColor] = useState('grey')
   const [isSaving, setIsSaving] = useState(false)
   const [displayFileError, setDisplayFileError] = useState(false)
+  const { params = null } = route
 
   const customHeader = ({ navigation }) => {
     return (
@@ -91,7 +92,7 @@ export default function NewPostScreen({ navigation }) {
           // Go to new post
           setIsSaving(false)
           setIsModalVisible(false)
-          navigation.push('Details', {
+          navigation.navigate('Details', {
             title: fileName.toLowerCase(),
           })
           setContent('')
@@ -105,13 +106,13 @@ export default function NewPostScreen({ navigation }) {
     setFileName('')
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    params && setContent(params.editableContent)
+    // Set custom screen header
     navigation.setOptions({
       header: customHeader,
     })
-  })
-
-  useEffect(() => {
+    // Dim publish button in customer header for empty content
     content.length > 0
       ? setPublishButtonColor('#2B29C6')
       : setPublishButtonColor('grey')

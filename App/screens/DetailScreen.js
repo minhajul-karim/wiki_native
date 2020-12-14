@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import Markdown from 'react-native-markdown-display'
+import { Button } from 'react-native-paper'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
 import { makeTitleCase } from '../utils/Helpers'
 
@@ -35,8 +36,20 @@ export default function DetailScreen({ route, navigation }) {
     // Update screen header
     navigation.setOptions({
       headerTitle: makeTitleCase(postTitle),
+      headerRight: () => (
+        <Button
+          color="#2B29C6"
+          onPress={() =>
+            navigation.navigate('Editor', {
+              editableContentTitle: postTitle,
+              editableContent: content,
+            })
+          }
+        >
+          Edit
+        </Button>
+      ),
     })
-
     let isSubscribed = true
     // Fetch content
     async function fetchContent(title) {
@@ -57,10 +70,11 @@ export default function DetailScreen({ route, navigation }) {
       }
     }
     fetchContent(postTitle)
+
     return () => {
       isSubscribed = false
     }
-  }, [])
+  }, [content])
 
   // Display activity indicator when the content is not ready yet
   if (isLoading && !content) {
