@@ -44,7 +44,7 @@ const NewPostStack = createStackNavigator()
 const NewPostStackScreen = ({ navigation }) => {
   return (
     <NewPostStack.Navigator>
-      <NewPostStack.Screen name="NewPost" component={EditorScreen} />
+      <NewPostStack.Screen name="Editor" component={EditorScreen} />
       <NewPostStack.Screen name="Details" component={DetailScreen} />
     </NewPostStack.Navigator>
   )

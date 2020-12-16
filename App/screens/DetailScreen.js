@@ -29,19 +29,19 @@ const styles = StyleSheet.create({
 export default function DetailScreen({ route, navigation }) {
   const [isLoading, setIsLoading] = useState(true)
   const [content, setContent] = useState('')
-  const postTitle = route.params.title
+  const [title, setTitle] = useState('')
 
-  // Load content of the card user tapped in home screen
+  // Load content of the post that user tapped in home screen
   useEffect(() => {
     // Update screen header
     navigation.setOptions({
-      headerTitle: makeTitleCase(postTitle),
+      headerTitle: makeTitleCase(title),
       headerRight: () => (
         <Button
           color="#2B29C6"
           onPress={() =>
             navigation.navigate('Editor', {
-              editableContentTitle: postTitle,
+              editableContentTitle: title,
               editableContent: content,
             })
           }
@@ -51,30 +51,30 @@ export default function DetailScreen({ route, navigation }) {
       ),
     })
     let isSubscribed = true
-    // Fetch content
-    async function fetchContent(title) {
-      try {
-        const response = await fetch(
-          `https://wiki-rest-api.herokuapp.com/api/entries/${title}`
-        )
-        const entry = await response.json()
-        if (response.ok) {
-          // Update state only if component is mounted
+
+    // Set title and content
+    setTitle(route.params.title)
+    if (route.params.content) {
+      setContent(route.params.content)
+    } else {
+      // Fetch content
+      fetch(`https://wiki-rest-api.herokuapp.com/api/entries/${title}`)
+        .then((response) => {
+          if (!response.ok)
+            console.error(`HTTP error! status: ${response.status}`)
+          return response.json()
+        })
+        .then((response) => {
           if (isSubscribed) {
-            setContent(entry.content)
+            setContent(response.content)
             setIsLoading(false)
           }
-        }
-      } catch (error) {
-        console.warn('err', error.message)
-      }
+        })
     }
-    fetchContent(postTitle)
-
     return () => {
       isSubscribed = false
     }
-  }, [content])
+  })
 
   // Display activity indicator when the content is not ready yet
   if (isLoading && !content) {

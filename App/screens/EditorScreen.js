@@ -44,6 +44,7 @@ export default function NewPostScreen({ route, navigation }) {
   const [publishButtonColor, setPublishButtonColor] = useState('grey')
   const [isSaving, setIsSaving] = useState(false)
   const [displayFileError, setDisplayFileError] = useState(false)
+  const [hasAddedEditableContent, setHasAddedEditableContent] = useState(false)
   const { params = null } = route
 
   const customHeader = ({ navigation }) => {
@@ -73,32 +74,61 @@ export default function NewPostScreen({ route, navigation }) {
 
   const publishHandler = () => {
     setIsSaving(true)
-    fetch('https://wiki-rest-api.herokuapp.com/api/entries/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title: fileName,
-        content: content,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.page_exists) {
-          setDisplayFileError(true)
-          setIsSaving(false)
-        } else {
-          // Go to new post
-          setIsSaving(false)
-          setIsModalVisible(false)
-          navigation.navigate('Details', {
-            title: fileName.toLowerCase(),
-          })
-          setContent('')
-          setFileName('')
-        }
+    // Publish new post
+    if (!params) {
+      fetch('https://wiki-rest-api.herokuapp.com/api/entries/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: fileName,
+          content: content,
+        }),
       })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.page_exists) {
+            setDisplayFileError(true)
+            setIsSaving(false)
+          } else {
+            // Go to new post
+            setIsSaving(false)
+            setIsModalVisible(false)
+            navigation.navigate('Details', {
+              title: fileName.toLowerCase(),
+              content: content,
+            })
+            setContent('')
+            setFileName('')
+          }
+        })
+    } else {
+      // Update post
+      fetch(`https://wiki-rest-api.herokuapp.com/api/entries/${fileName}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: fileName,
+          content: content,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.file_updated) {
+            // Go to updated post
+            setIsSaving(false)
+            setIsModalVisible(false)
+            navigation.navigate('Details', {
+              title: fileName.toLowerCase(),
+            })
+            setContent('')
+            setFileName('')
+          }
+        })
+    }
   }
 
   const cancelHandler = () => {
@@ -107,7 +137,18 @@ export default function NewPostScreen({ route, navigation }) {
   }
 
   useEffect(() => {
-    params && setContent(params.editableContent)
+    // console.log(params)
+    // if (params) {
+    //   console.log(hasAddedEditableContent)
+    // }
+    // Set content if user has arrived from detail screen
+    // if (!hasAddedEditableContent) {
+    //   if (params) {
+    //     setFileName(params.editableContentTitle)
+    //     setContent(params.editableContent)
+    //   }
+    //   setHasAddedEditableContent(true)
+    // }
     // Set custom screen header
     navigation.setOptions({
       header: customHeader,
@@ -180,7 +221,7 @@ export default function NewPostScreen({ route, navigation }) {
         multiline
         numberOfLines={5}
         autoFocus
-        placeholder="Write markdown..."
+        placeholder="Write markdown"
         onChangeText={(text) => setContent(text)}
         value={content}
       />
