@@ -52,8 +52,9 @@ export default function DetailScreen({ route, navigation }) {
     })
     let isSubscribed = true
 
-    // Set title and content
+    // Set title
     setTitle(route.params.title)
+    // Set content from route params if we arrive here from editor screen
     if (route.params.content) {
       setContent(route.params.content)
     } else {

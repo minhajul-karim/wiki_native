@@ -44,8 +44,6 @@ export default function NewPostScreen({ route, navigation }) {
   const [publishButtonColor, setPublishButtonColor] = useState('grey')
   const [isSaving, setIsSaving] = useState(false)
   const [displayFileError, setDisplayFileError] = useState(false)
-  const [hasAddedEditableContent, setHasAddedEditableContent] = useState(false)
-  const { params = null } = route
 
   const customHeader = ({ navigation }) => {
     return (
@@ -75,7 +73,8 @@ export default function NewPostScreen({ route, navigation }) {
   const publishHandler = () => {
     setIsSaving(true)
     // Publish new post
-    if (!params) {
+    if (!route.params) {
+      console.log('posting...')
       fetch('https://wiki-rest-api.herokuapp.com/api/entries/', {
         method: 'POST',
         headers: {
@@ -104,6 +103,7 @@ export default function NewPostScreen({ route, navigation }) {
           }
         })
     } else {
+      console.log('Editing')
       // Update post
       fetch(`https://wiki-rest-api.herokuapp.com/api/entries/${fileName}`, {
         method: 'PUT',
@@ -137,24 +137,20 @@ export default function NewPostScreen({ route, navigation }) {
   }
 
   useEffect(() => {
-    // console.log(params)
-    // if (params) {
-    //   console.log(hasAddedEditableContent)
-    // }
-    // Set content if user has arrived from detail screen
-    // if (!hasAddedEditableContent) {
-    //   if (params) {
-    //     setFileName(params.editableContentTitle)
-    //     setContent(params.editableContent)
-    //   }
-    //   setHasAddedEditableContent(true)
-    // }
+    if (route.params) {
+      setContent(route.params.editableContent)
+      setFileName(route.params.editableContentTitle)
+    }
+  }, [route.params])
+
+  useEffect(() => {
+    console.log(route)
     // Set custom screen header
     navigation.setOptions({
       header: customHeader,
     })
     // Dim publish button in customer header for empty content
-    content.length > 0
+    content && content.length > 0
       ? setPublishButtonColor('#2B29C6')
       : setPublishButtonColor('grey')
     if (fileName.length > 0) {
