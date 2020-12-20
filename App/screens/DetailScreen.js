@@ -6,23 +6,12 @@ import CustomActivityIndicator from '../components/CustomActivityIndicator'
 import { makeTitleCase } from '../utils/Helpers'
 
 const styles = StyleSheet.create({
-  body: {
-    fontSize: 15,
-  },
   container: {
-    backgroundColor: '#fff',
+    fontSize: 30,
+    backgroundColor: 'lightblue',
     height: '100%',
-    padding: 10,
-    paddingHorizontal: 20,
-  },
-  content: {
-    fontSize: 15,
-  },
-  paragraph: {
-    lineHeight: 25,
-  },
-  bullet_list: {
-    lineHeight: 25,
+    paddingHorizontal: 30,
+    paddingVertical: 30,
   },
 })
 
@@ -83,8 +72,18 @@ export default function DetailScreen({ route, navigation }) {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <Markdown style={styles}>{content}</Markdown>
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      style={{ height: '100%' }}
+    >
+      <Markdown
+        style={{
+          body: { fontSize: 16, padding: 20 },
+          paragraph: { lineHeight: 25 },
+        }}
+      >
+        {content}
+      </Markdown>
     </ScrollView>
   )
 }
