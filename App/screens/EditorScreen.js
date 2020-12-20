@@ -1,3 +1,4 @@
+import { useDimensions, useKeyboard } from '@react-native-community/hooks'
 import React, { useEffect, useState } from 'react'
 import {
   Keyboard,
@@ -44,6 +45,9 @@ export default function NewPostScreen({ route, navigation }) {
   const [publishButtonColor, setPublishButtonColor] = useState('grey')
   const [isSaving, setIsSaving] = useState(false)
   const [displayFileError, setDisplayFileError] = useState(false)
+  const { height } = useDimensions().window
+  const { keyboardHeight } = useKeyboard()
+  const [textInputHeight, setTextInputHeight] = useState(0)
 
   const customHeader = ({ navigation }) => {
     return (
@@ -74,7 +78,6 @@ export default function NewPostScreen({ route, navigation }) {
     setIsSaving(true)
     // Publish new post
     if (!route.params) {
-      console.log('posting...')
       fetch('https://wiki-rest-api.herokuapp.com/api/entries/', {
         method: 'POST',
         headers: {
@@ -103,7 +106,6 @@ export default function NewPostScreen({ route, navigation }) {
           }
         })
     } else {
-      console.log('Editing')
       // Update post
       fetch(`https://wiki-rest-api.herokuapp.com/api/entries/${fileName}`, {
         method: 'PUT',
@@ -144,7 +146,7 @@ export default function NewPostScreen({ route, navigation }) {
   }, [route.params])
 
   useEffect(() => {
-    console.log(route)
+    setTextInputHeight(Math.floor(height) - Math.floor(keyboardHeight))
     // Set custom screen header
     navigation.setOptions({
       header: customHeader,
@@ -213,9 +215,8 @@ export default function NewPostScreen({ route, navigation }) {
         </Dialog>
       </Portal>
       <TextInput
-        style={styles.input}
+        style={[styles.input, { height: textInputHeight - 100 }]}
         multiline
-        numberOfLines={5}
         autoFocus
         placeholder="Write markdown"
         onChangeText={(text) => setContent(text)}
