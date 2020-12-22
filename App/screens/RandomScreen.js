@@ -13,6 +13,13 @@ import CustomActivityIndicator from '../components/CustomActivityIndicator'
 import { fetchEntries, generateRandomIndex } from '../utils/Helpers'
 
 const styles = StyleSheet.create({
+  header: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#000',
+    marginTop: 10,
+    marginLeft: 15,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -84,17 +91,7 @@ export default function RandomScreen({ navigation }) {
   }
   return (
     <View>
-      <Text
-        style={{
-          fontSize: 30,
-          fontWeight: 'bold',
-          color: '#2B29C6',
-          marginTop: 10,
-          marginLeft: 15,
-        }}
-      >
-        Random Post
-      </Text>
+      <Text style={styles.header}>Random Post</Text>
       <View
         style={[
           styles.container,

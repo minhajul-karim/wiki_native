@@ -6,14 +6,21 @@ import CustomActivityIndicator from '../components/CustomActivityIndicator'
 import { fetchEntries } from '../utils/Helpers'
 
 const styles = StyleSheet.create({
+  brand: {
+    color: '#2B29C6',
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
   container: {
     flex: 1,
     padding: 15,
     backgroundColor: '#fff',
   },
   searchBar: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F6F6F6',
     marginBottom: 20,
+    borderRadius: 50,
   },
   boldText: {
     fontSize: 20,
@@ -88,16 +95,7 @@ export default function HomeScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <View style={{ padding: 1 }}>
-            <Text
-              style={{
-                color: '#2B29C6',
-                fontSize: 30,
-                fontWeight: 'bold',
-                marginBottom: 10,
-              }}
-            >
-              WiKi
-            </Text>
+            <Text style={styles.brand}>WiKi</Text>
             <Searchbar
               value={searchQuery}
               onChangeText={(text) => onChangeSearch(text)}
