@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import {
   Animated,
   StyleSheet,
+  Text,
   TouchableWithoutFeedback,
   useWindowDimensions,
   View,
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 30,
+    padding: 15,
   },
   diceButton: {
     backgroundColor: '#2B29C6',
@@ -82,22 +83,35 @@ export default function RandomScreen({ navigation }) {
     return <CustomActivityIndicator />
   }
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          minHeight: Math.round(window.height),
-        },
-      ]}
-    >
-      <View style={{ marginBottom: 50, width: '90%' }}>
-        <Card title={randomPost} navigation={navigation} />
+    <View>
+      <Text
+        style={{
+          fontSize: 30,
+          fontWeight: 'bold',
+          color: '#2B29C6',
+          marginTop: 10,
+          marginLeft: 15,
+        }}
+      >
+        Random Post
+      </Text>
+      <View
+        style={[
+          styles.container,
+          {
+            minHeight: Math.round(window.height),
+          },
+        ]}
+      >
+        <View style={{ marginBottom: 50, width: '100%' }}>
+          <Card title={randomPost} navigation={navigation} />
+        </View>
+        <TouchableWithoutFeedback onPress={onPressHandler}>
+          <Animated.View style={[styles.diceButton, rotationStyle]}>
+            <FontAwesome5 name="dice-five" size={40} color="white" />
+          </Animated.View>
+        </TouchableWithoutFeedback>
       </View>
-      <TouchableWithoutFeedback onPress={onPressHandler}>
-        <Animated.View style={[styles.diceButton, rotationStyle]}>
-          <FontAwesome5 name="dice-five" size={40} color="white" />
-        </Animated.View>
-      </TouchableWithoutFeedback>
     </View>
   )
 }

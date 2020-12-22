@@ -8,7 +8,7 @@ import { fetchEntries } from '../utils/Helpers'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 15,
     backgroundColor: '#fff',
   },
   searchBar: {

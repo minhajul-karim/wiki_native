@@ -42,10 +42,16 @@ const RandomStackScreen = () => {
         name="Random"
         component={RandomScreen}
         options={{
-          title: 'Random Post',
+          headerShown: false,
         }}
       />
-      <RandomStack.Screen name="Details" component={DetailScreen} />
+      <RandomStack.Screen
+        name="Details"
+        component={DetailScreen}
+        options={{
+          title: '',
+        }}
+      />
     </RandomStack.Navigator>
   )
 }
