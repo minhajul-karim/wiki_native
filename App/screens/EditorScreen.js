@@ -51,7 +51,7 @@ export default function NewPostScreen({ route, navigation }) {
 
   const customHeader = ({ navigation }) => {
     return (
-      <Appbar.Header style={{ backgroundColor: '#fff' }}>
+      <Appbar.Header style={{ backgroundColor: '#fff', marginTop: 0 }}>
         <Appbar.Content
           title="Publish"
           titleStyle={{ color: publishButtonColor, fontSize: 17 }}

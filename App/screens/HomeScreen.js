@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, RefreshControl, StyleSheet, View } from 'react-native'
+import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native'
 import { Searchbar } from 'react-native-paper'
 import Card from '../components/Card'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
@@ -88,6 +88,16 @@ export default function HomeScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <View style={{ padding: 1 }}>
+            <Text
+              style={{
+                color: '#2B29C6',
+                fontSize: 30,
+                fontWeight: 'bold',
+                marginBottom: 10,
+              }}
+            >
+              WiKi
+            </Text>
             <Searchbar
               value={searchQuery}
               onChangeText={(text) => onChangeSearch(text)}

@@ -2,6 +2,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
+import { StatusBar } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
 import DetailScreen from './screens/DetailScreen'
 import EditorScreen from './screens/EditorScreen'
@@ -16,9 +17,17 @@ const HomeStackScreen = () => {
       <HomeStack.Screen
         name="Home"
         component={HomeScreen}
-        options={{ title: 'Wiki' }}
+        options={{
+          headerShown: false,
+        }}
       />
-      <HomeStack.Screen name="Details" component={DetailScreen} />
+      <HomeStack.Screen
+        name="Details"
+        component={DetailScreen}
+        options={{
+          title: '',
+        }}
+      />
       <HomeStack.Screen name="Editor" component={EditorScreen} />
     </HomeStack.Navigator>
   )
@@ -32,7 +41,9 @@ const RandomStackScreen = () => {
       <RandomStack.Screen
         name="Random"
         component={RandomScreen}
-        options={{ title: 'Random Post' }}
+        options={{
+          title: 'Random Post',
+        }}
       />
       <RandomStack.Screen name="Details" component={DetailScreen} />
     </RandomStack.Navigator>
@@ -41,10 +52,14 @@ const RandomStackScreen = () => {
 
 const NewPostStack = createStackNavigator()
 
-const NewPostStackScreen = ({ navigation }) => {
+const NewPostStackScreen = () => {
   return (
     <NewPostStack.Navigator>
-      <NewPostStack.Screen name="Editor" component={EditorScreen} />
+      <NewPostStack.Screen
+        name="Editor"
+        component={EditorScreen}
+        options={{ title: '' }}
+      />
       <NewPostStack.Screen name="Details" component={DetailScreen} />
     </NewPostStack.Navigator>
   )
@@ -55,6 +70,7 @@ const Tab = createMaterialBottomTabNavigator()
 export default function App() {
   return (
     <PaperProvider>
+      <StatusBar barStyle="light-content" backgroundColor="#2B29C6" />
       <NavigationContainer>
         <Tab.Navigator
           shifting

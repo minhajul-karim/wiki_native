@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
+import { ScrollView, StatusBar, StyleSheet } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 import { Button } from 'react-native-paper'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
@@ -76,6 +76,7 @@ export default function DetailScreen({ route, navigation }) {
       contentInsetAdjustmentBehavior="automatic"
       style={{ height: '100%' }}
     >
+      <StatusBar barStyle="light-content" />
       <Markdown
         style={{
           body: { fontSize: 16, padding: 20 },
