@@ -52,6 +52,7 @@ const RandomStackScreen = () => {
           title: '',
         }}
       />
+      <HomeStack.Screen name="Editor" component={EditorScreen} />
     </RandomStack.Navigator>
   )
 }

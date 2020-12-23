@@ -63,7 +63,7 @@ export default function NewPostScreen({ route, navigation }) {
         />
         <Appbar.Action
           icon="close"
-          color="#000"
+          color="#2B29C6"
           onPress={() => {
             setContent('')
             navigation.goBack()
@@ -133,11 +133,13 @@ export default function NewPostScreen({ route, navigation }) {
     }
   }
 
+  // Remove post content and file name
   const cancelHandler = () => {
     setIsModalVisible(false)
     setFileName('')
   }
 
+  // Display post content in text input
   useEffect(() => {
     if (route.params) {
       setContent(route.params.editableContent)
@@ -146,6 +148,7 @@ export default function NewPostScreen({ route, navigation }) {
   }, [route.params])
 
   useEffect(() => {
+    // Set text input height according to the keyboard height
     setTextInputHeight(Math.floor(height) - Math.floor(keyboardHeight))
     // Set custom screen header
     navigation.setOptions({
