@@ -82,6 +82,14 @@ export default function HomeScreen({ navigation }) {
     }
   }, [])
 
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     navigation.setOptions({
+  //       tabBarVisible: true,
+  //     })
+  //   }
+  // }, [isLoading])
+
   if (isLoading) {
     return <CustomActivityIndicator />
   }

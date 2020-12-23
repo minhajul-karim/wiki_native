@@ -56,18 +56,18 @@ const RandomStackScreen = () => {
   )
 }
 
-const NewPostStack = createStackNavigator()
+const EditorStack = createStackNavigator()
 
-const NewPostStackScreen = () => {
+const EditorStackScreen = () => {
   return (
-    <NewPostStack.Navigator>
-      <NewPostStack.Screen
+    <EditorStack.Navigator>
+      <EditorStack.Screen
         name="Editor"
         component={EditorScreen}
         options={{ title: '' }}
       />
-      <NewPostStack.Screen name="Details" component={DetailScreen} />
-    </NewPostStack.Navigator>
+      <EditorStack.Screen name="Details" component={DetailScreen} />
+    </EditorStack.Navigator>
   )
 }
 
@@ -95,7 +95,7 @@ export default function App() {
           />
           <Tab.Screen
             name="New"
-            component={NewPostStackScreen}
+            component={EditorStackScreen}
             options={{ tabBarIcon: 'file-plus', title: 'New' }}
           />
         </Tab.Navigator>
